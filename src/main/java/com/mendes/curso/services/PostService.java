@@ -1,5 +1,6 @@
 package com.mendes.curso.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,12 @@ public class PostService {
 	}
 	
 	public List<Post> encontrarPorTitulo(String texto) {
-//		return repo.findByTituloContainingIgnoreCase(texto);
 		return repo.procuraPorTituloManual(texto);
+	}
+	
+	public List<Post> encontrarCompleto(String texto, Date dtInicio, Date dtFim) {
+		dtFim = new Date(dtFim.getTime() + 24 * 60 * 60 * 1000);
+		
+		return repo.procuraPostCompleto(texto, dtInicio, dtFim);
 	}
 }

@@ -1,5 +1,6 @@
 package com.mendes.curso.resources;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,20 @@ public class PostResource {
 		texto = URL.decodeParam(texto);
 		
 		List<Post> posts = service.encontrarPorTitulo(texto);
+		
+		return ResponseEntity.ok().body(posts);		
+	}
+	
+	@RequestMapping(value="/pesquisa", method=RequestMethod.GET)
+	public ResponseEntity<List<Post>> pesquisaTotal(
+			@RequestParam(value="texto", defaultValue="") String texto,
+			@RequestParam(value="dtInicio", defaultValue="") String dtInicio,
+			@RequestParam(value="dtFim", defaultValue="") String dtFim) {
+		texto = URL.decodeParam(texto);
+		Date dtI = URL.convertDate(dtInicio, new Date(0L));
+		Date dtF = URL.convertDate(dtFim, new Date());
+		
+		List<Post> posts = service.encontrarCompleto(texto, dtI, dtF);
 		
 		return ResponseEntity.ok().body(posts);		
 	}
