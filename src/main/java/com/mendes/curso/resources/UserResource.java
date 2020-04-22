@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.mendes.curso.domain.Post;
 import com.mendes.curso.domain.User;
 import com.mendes.curso.dto.UserDTO;
 import com.mendes.curso.services.UserService;
@@ -35,9 +36,7 @@ public class UserResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<UserDTO> listaUm(@PathVariable String id) {
 		User usuario = service.listaUm(id);
-		UserDTO usuarioDTO = new UserDTO(usuario);
-		
-		return ResponseEntity.ok().body(usuarioDTO);		
+		return ResponseEntity.ok().body(new UserDTO(usuario));		
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
@@ -62,5 +61,11 @@ public class UserResource {
 		usuario = service.atualizaUsuario(usuario);
 		
 		return ResponseEntity.noContent().build();		
+	}
+	
+	@RequestMapping(value="/{id}/posts", method=RequestMethod.GET)
+	public ResponseEntity<List<Post>> listaPosts(@PathVariable String id) {
+		User usuario = service.listaUm(id);
+		return ResponseEntity.ok().body(usuario.getPosts());		
 	}
 }

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.mendes.curso.domain.Post;
 import com.mendes.curso.domain.User;
 import com.mendes.curso.dto.AutorDTO;
+import com.mendes.curso.dto.CommentDTO;
 import com.mendes.curso.repository.PostRepository;
 import com.mendes.curso.repository.UserRepository;
 
@@ -39,6 +40,13 @@ public class Instantiation implements CommandLineRunner {
 		
 		Post p1 = new Post(null, sdf.parse("21/03/2018") , "Partiu viagem", "Viagem para Sampa", new AutorDTO(u1));
 		Post p2 = new Post(null, sdf.parse("29/03/2018") , "Partiu viagem", "Viagem para Londres", new AutorDTO(u1));
+		
+		CommentDTO c1 = new CommentDTO("Boa viagem", sdf.parse("21/03/2018"), new AutorDTO(u2));
+		CommentDTO c2 = new CommentDTO("Aproveite", sdf.parse("22/03/2018"), new AutorDTO(u3));
+		CommentDTO c3 = new CommentDTO("Tenha uma ótima viagem", sdf.parse("29/03/2018"), new AutorDTO(u2));
+		
+		p1.getComments().addAll(Arrays.asList(c1, c2));
+		p2.getComments().add(c3);
 		
 		postRepository.saveAll(Arrays.asList(p1, p2));
 		
