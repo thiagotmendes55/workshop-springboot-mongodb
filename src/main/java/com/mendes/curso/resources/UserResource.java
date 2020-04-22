@@ -48,4 +48,11 @@ public class UserResource {
 		
 		return ResponseEntity.created(uri).build();		
 	}
+
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<UserDTO> exclui(@PathVariable String id) {
+		service.excluiUsuario(id);
+		return ResponseEntity.noContent().build();		
+	}
+	
 }

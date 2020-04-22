@@ -30,6 +30,11 @@ public class UserService {
 		return repo.insert(obj);
 	}
 	
+	public void excluiUsuario(String id) {
+		this.listaUm(id);
+		repo.deleteById(id);
+	}
+	
 	public User fromDTO(UserDTO objDTO) {
 		return new User(objDTO.getId(), objDTO.getNome(), objDTO.getEmail());
 	}
